@@ -3,6 +3,8 @@ import { createUseStyles } from "react-jss";
 import PaginationSection from "./PaginationSection";
 import type { PokemonItemsType } from "../../../utilities/interfaces";
 import { Url } from "../../../utilities/functios";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../Store/store";
 
 const useStyles = createUseStyles({
   pokemonCardMainContainer: {
@@ -214,6 +216,7 @@ export default function PokemonContainer({
   const [val, setVal] = useState<PokemonStats[]>([]);
   //const dispatch = useDispatch();
   const [visiblePagination, setVisiblePagination] = useState<number>(4);
+  const { isLoading } = useSelector((state: RootState) => state.LoadingSlice);
 
   //console.log("pokemons", pokemons);
 
@@ -285,9 +288,9 @@ export default function PokemonContainer({
       <div className={classes.title}>
         <h2> Choose Your Pokémon</h2>
       </div>
-      <p className={classes.PageNumber}>Page {currentPage}</p>
+      {!isLoading && <p className={classes.PageNumber}>Page {currentPage}</p>}
       <div className={classes.pokemonCardContainer}>
-        {slicedCard.length > 0 ? (
+        {slicedCard &&
           slicedCard.map((pok, index) => {
             return (
               <div
@@ -416,12 +419,7 @@ export default function PokemonContainer({
                 </div>
               </div>
             );
-          })
-        ) : (
-          <div>
-            <h2>No Pokemon Show</h2>
-          </div>
-        )}
+          })}
       </div>
       <PaginationSection
         currentPage={currentPage}
