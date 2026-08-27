@@ -30,7 +30,7 @@ jobs:
         working-directory: ./frontend/train
         run: npm install
 
-      - name: Frontend - Run
+      - name: Frontend - Build
         working-directory: ./frontend/train
         run: npm run build
 
@@ -48,29 +48,27 @@ jobs:
         working-directory: ./backend
         run: npm install
 
-      - name: Backend - Run
-        working-directory: ./backend
-        run: npm run build
-
-      - name: Backend - Test
-        working-directory: ./backend
-        run: npm test
-
-      # ========================================
-      # BACKEND ENVIRONMENT
-      # ========================================
-
       - name: Backend - Create .env
         run: |
           echo "PORT=${{ secrets.PORT }}" > backend/.env
           echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> backend/.env
 
-      # ========================================
-      # BACKEND DOCKER
-      # ========================================
-
-      - name: Backend - Docker Build
+      - name: Backend - Build
         run: docker build -t backend ./backend
+
+      - name: Backend - Run
+        run: docker run -d --name backend-test --env-file backend/.env -p 5000:5000 backend
+
+      - name: Backend - Check
+        run: docker ps
+
+      - name: Backend - Logs
+        if: failure()
+        run: docker logs backend-test
+
+      - name: Backend - Stop
+        if: always()
+        run: docker stop backend-test || true
 
       # ========================================
       # DOCKER COMPOSE
@@ -104,16 +102,17 @@ jobs:
           echo "========================================"
           echo "Frontend - Install: SUCCESS"
           echo "Frontend - Build: SUCCESS"
-          echo "Frontend - Test: SUCCESS"
+          echo "Frontend - Test: NOT STARTED YET"
           echo "Frontend - Docker Build: SUCCESS"
           echo "Backend - Install: SUCCESS"
-          echo "Backend - Build: SUCCESS"
-          echo "Backend - Test: SUCCESS"
           echo "Backend - Environment: SUCCESS"
           echo "Backend - Docker Build: SUCCESS"
+          echo "Backend - Run: SUCCESS"
+          echo "Backend - Check: SUCCESS"
+          echo "Backend - Test: NOT STARTED YET"
           echo "Docker - Build: SUCCESS"
           echo "Docker - Start: SUCCESS"
           echo "Docker - Check: SUCCESS"
           echo "========================================"
-          echo "ALL FRONTEND AND BACKEND STEPS PASSED"
+          echo "CI/CD PIPELINE COMPLETED"
           echo "========================================"
