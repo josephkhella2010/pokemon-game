@@ -37,11 +37,9 @@ interface ApiOptions {
   data?: unknown;
 }
 
+const API_URL = "https://pokemon-game-462k.onrender.com/api";
 
-
-const API_URL = "http://localhost:5000/api";
-
-export const ApiUrl = async ({method, endpoint, data }: ApiOptions) => {
+export const ApiUrl = async ({ method, endpoint, data }: ApiOptions) => {
   const response = await fetch(`${API_URL}${endpoint}`, {
     method,
     headers: {
@@ -55,7 +53,6 @@ export const ApiUrl = async ({method, endpoint, data }: ApiOptions) => {
 
   return result;
 };
-
 
 export const Url = {
   normal:
