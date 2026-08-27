@@ -1,0 +1,82 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ========================================
+      # CHECKOUT
+      # ========================================
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ========================================
+      # FRONTEND
+      # ========================================
+
+      - name: Frontend - Install
+        working-directory: ./frontend/train
+        run: npm install
+
+      - name: Frontend - Run
+        working-directory: ./frontend/train
+        run: npm run build
+
+      - name: Frontend - Test
+        working-directory: ./frontend/train
+        run: npm test -- --watchAll=false
+
+      - name: Frontend - Docker Build
+        run: docker build -t frontend ./frontend/train
+
+      # ========================================
+      # BACKEND
+      # ========================================
+
+      - name: Backend - Install
+        working-directory: ./backend
+        run: npm install
+
+      - name: Backend - Run
+        working-directory: ./backend
+        run: npm run build
+
+      - name: Backend - Test
+        working-directory: ./backend
+        run: npm test
+
+      - name: Backend - Docker Build
+        run: docker build -t backend ./backend
+
+      # ========================================
+      # DOCKER COMPOSE
+      # ========================================
+
+      - name: Docker - Build
+        run: docker compose build
+
+      - name: Docker - Start Frontend and Backend
+        run: docker compose up -d
+
+      - name: Docker - Check Containers
+        run: docker compose ps
+
+      - name: Docker - Show Logs
+        if: failure()
+        run: docker compose logs
+
+      - name: Docker - Stop Containers
+        if: always()
+        run: docker compose down
