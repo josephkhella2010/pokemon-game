@@ -37,7 +37,7 @@ interface ApiOptions {
   data?: unknown;
 }
 
-const API_URL = "https://pokemon-game-462k.onrender.com/api";
+const API_URL = " https://pokemon-game-backend-1ny7.onrender.com/api";
 
 export const ApiUrl = async ({ method, endpoint, data }: ApiOptions) => {
   const response = await fetch(`${API_URL}${endpoint}`, {
