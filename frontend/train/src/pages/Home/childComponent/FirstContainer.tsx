@@ -44,6 +44,11 @@ export default function FirstContainer() {
     <div className={classes.firstContainer}>
       <div className={`${classes.firstSection}   ${classes.textContainer}`}>
         <h2 className={classes.title}>Start Your Pokémon Adventure</h2>
+        <h2 className={classes.title}>Start Your Pokémon Adventure</h2>
+        <h2 className={classes.title}>Start Your Pokémon Adventure</h2>
+        <h2 className={classes.title}>Start Your Pokémon Adventure</h2>
+        <h2 className={classes.title}>Start Your Pokémon Adventure</h2>
+
         <p>
           Explore a world full of amazing creatures, exciting battles, and
           unforgettable adventures. Catch new Pokémon, build your dream team,
