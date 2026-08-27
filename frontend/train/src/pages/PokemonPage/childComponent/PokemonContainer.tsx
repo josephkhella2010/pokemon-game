@@ -9,6 +9,7 @@ const useStyles = createUseStyles({
     position: "relative",
     paddingBottom: "100px",
     padding: "0px 30px",
+    minHeight: "100dvh",
     "@media (max-width: 600px)": {
       paddingRigth: "20px",
       paddingLeft: "20px",
