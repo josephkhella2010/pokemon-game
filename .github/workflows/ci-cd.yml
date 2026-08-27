@@ -36,7 +36,7 @@ jobs:
 
       - name: Frontend - Test
         working-directory: ./frontend/train
-        run: npm test -- --watchAll=false
+        run: npm test
 
       - name: Frontend - Docker Build
         run: docker build -t frontend ./frontend/train
