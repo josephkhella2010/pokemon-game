@@ -57,6 +57,19 @@ jobs:
         working-directory: ./backend
         run: npm test
 
+      # ========================================
+      # BACKEND ENVIRONMENT
+      # ========================================
+
+      - name: Backend - Create .env
+        run: |
+          echo "PORT=${{ secrets.PORT }}" > backend/.env
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> backend/.env
+
+      # ========================================
+      # BACKEND DOCKER
+      # ========================================
+
       - name: Backend - Docker Build
         run: docker build -t backend ./backend
 
@@ -80,3 +93,28 @@ jobs:
       - name: Docker - Stop Containers
         if: always()
         run: docker compose down
+
+      # ========================================
+      # FINAL
+      # ========================================
+
+      - name: Final - All Steps Completed
+        run: |
+          echo "========================================"
+          echo "CI/CD PIPELINE COMPLETED"
+          echo "========================================"
+          echo "Frontend - Install: SUCCESS"
+          echo "Frontend - Build: SUCCESS"
+          echo "Frontend - Test: SUCCESS"
+          echo "Frontend - Docker Build: SUCCESS"
+          echo "Backend - Install: SUCCESS"
+          echo "Backend - Build: SUCCESS"
+          echo "Backend - Test: SUCCESS"
+          echo "Backend - Environment: SUCCESS"
+          echo "Backend - Docker Build: SUCCESS"
+          echo "Docker - Build: SUCCESS"
+          echo "Docker - Start: SUCCESS"
+          echo "Docker - Check: SUCCESS"
+          echo "========================================"
+          echo "ALL FRONTEND AND BACKEND STEPS PASSED"
+          echo "========================================"
