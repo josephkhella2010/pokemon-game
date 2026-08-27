@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createUseStyles } from "react-jss";
 import { useNavigate } from "react-router-dom";
 
@@ -8,10 +9,11 @@ const useStyles = createUseStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    background: "#202750d2",
+    background: "#202750",
     boxSizing: "border-box",
     position: "fixed",
     zIndex: "10",
+    transition: "opacity 0.3s ease",
   },
 
   logo: {
@@ -72,14 +74,38 @@ const useStyles = createUseStyles({
       fontSize: "14px",
     },
   },
+  opacity: {
+    opacity: "0.8",
+  },
 });
 
 export default function NavigationPage(): React.ReactElement {
   const classes = useStyles();
   const Navigate = useNavigate();
 
+  /*  function */
+  useEffect(() => {
+    const navigation = document.querySelector("#nav");
+
+    if (!navigation) return;
+
+    const handleScroll = () => {
+      if (window.scrollY > 60) {
+        navigation.classList.add(classes.opacity);
+      } else {
+        navigation.classList.remove(classes.opacity);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [classes.opacity]);
+
   return (
-    <nav className={classes.nav}>
+    <nav className={classes.nav} id="nav">
       <div className={classes.logo}>⚡ PokéBattle</div>
 
       <div className={classes.links}>
