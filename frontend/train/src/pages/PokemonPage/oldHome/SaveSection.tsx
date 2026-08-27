@@ -1,4 +1,4 @@
-import { inputArr } from "../utilities/functios";
+/* import { inputArr } from "../utilities/functios";
 import type { inputArrValType } from "../utilities/interfaces";
 
 interface PropsType {
@@ -41,3 +41,4 @@ export default function SaveSection({
     </div>
   );
 }
+ */

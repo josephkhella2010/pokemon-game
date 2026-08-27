@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -30,7 +30,7 @@ export default function HomePage() {
   const { products } = useSelector((state: RootState) => state.productSlice);
   const dispatch = useDispatch();
 
-  /* functions*/
+  ////// functions/////
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -85,7 +85,6 @@ export default function HomePage() {
   const user = { loggedIn: true };
   console.log(!user.loggedIn);
 
-  /*  */
   return (
     <div>
       <h1>HomePage</h1>
@@ -145,3 +144,4 @@ export default function HomePage() {
     </div>
   );
 }
+ */
